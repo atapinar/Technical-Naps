@@ -14,7 +14,7 @@ import seaborn as sns
 import pandas_ta as pta # Replaced ta with pandas_ta
 import numpy as np
 import uuid # For unique filenames
-from src.stock_data import StockDataFetcher
+from stock_data import StockDataFetcher
 import time # Added for timing
 import traceback # Added for better error reporting
 
