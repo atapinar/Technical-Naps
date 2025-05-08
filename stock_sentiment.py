@@ -443,8 +443,8 @@ class StockSentimentAnalyzer:
         rsi_score = 0.0
         if pd.notna(rsi_value):
             if rsi_value < 30: rsi_emoji, rsi_score = "🟢", 0.7
-            elif rsi_value > 70: rsi_emoji, rsi_score = "🔴", -0.7
-            else: rsi_emoji, rsi_score = "🟡", 0.0
+            elif rsi_value > 65: rsi_emoji, rsi_score = "🔴", -0.7 # Changed from 70 to 65
+            else: rsi_emoji, rsi_score = "🟡", 0.0 # Neutral range is now 30 <= RSI <= 65
             ta_metrics_details.append({'name': 'RSI (14)', 'value': f"{rsi_value:.2f}", 'emoji': rsi_emoji, 'score': rsi_score, 'formatted_string': f"RSI (14): {rsi_value:.2f} {rsi_emoji} (Score: {rsi_score:.2f})"})
             ta_scores.append(rsi_score)
         else:
@@ -556,9 +556,9 @@ class StockSentimentAnalyzer:
         if pd.notna(monthly_log_return_value_raw):
             monthly_log_return_percent = monthly_log_return_value_raw * 100
             monthly_lr_score = min(1.0, max(-1.0, monthly_log_return_percent / 10.0))
-            if monthly_lr_score > 0.05: monthly_lr_emoji = "🟢"
-            elif monthly_lr_score < -0.05: monthly_lr_emoji = "🔴"
-            else: monthly_lr_emoji = "🟡"
+            if monthly_lr_score > 0.05: monthly_lr_emoji = "🔴" # Positive return, negative signal
+            elif monthly_lr_score < -0.05: monthly_lr_emoji = "🟢" # Negative return, positive signal
+            else: monthly_lr_emoji = "🟡" # Neutral
             ta_metrics_details.append({
                 'name': f"Monthly Log Return ({monthly_log_return_period_str})",
                 'value': f"{monthly_log_return_percent:.2f}%",
@@ -678,7 +678,7 @@ def plot_rsi_on_ax(ax, asset_df, symbol):
     ax.set_title(f'{symbol.upper()} RSI (14)', fontsize=14)
     if 'RSI_14' in asset_df.columns and not asset_df['RSI_14'].isnull().all():
         ax.plot(asset_df.index, asset_df['RSI_14'], label='RSI', color='purple')
-        ax.axhline(70, color='red', linestyle='--', alpha=0.5, label='Overbought (70)')
+        ax.axhline(65, color='red', linestyle='--', alpha=0.5, label='Overbought (65)') # Changed from 70 to 65
         ax.axhline(30, color='green', linestyle='--', alpha=0.5, label='Oversold (30)')
         ax.set_ylim(0, 100)
         ax.legend()
@@ -1112,15 +1112,30 @@ async def main_cli():
     results = await asyncio.gather(*tasks)
 
     for i, symbol in enumerate(symbols):
-        report_string, img_path, _ = results[i] # Unpack result, ignore grok payload for CLI
+        grok_payload, img_path = results[i] # Unpack result
         print("\n" + "="*40)
         print(f"Report for {symbol}:")
-        print(report_string)
+        # For CLI, we might want a simpler output than the full grok payload.
+        # Let's construct a summary similar to what was in final_report_string
+        # or print the FORMATTED_TA_SUMMARY_BLOCK and some key fields.
+        
+        cli_summary_parts = [
+            f"*{symbol.upper()} Analysis Report*",
+            f"Current Price: {grok_payload.get('LATEST_CLOSE_PRICE', 'N/A')}",
+            f"Market Cap: {grok_payload.get('MARKET_CAP', 'N/A')}",
+            f"YTD Change: {grok_payload.get('YTD_CHANGE_PERCENT', 'N/A')}",
+            f"Reddit Activity: {grok_payload.get('NUM_RECENT_POSTS', 0)} recent posts analyzed.",
+            f"Sentiment Prediction (Avg Recent): {grok_payload.get('AVG_RECENT_SENTIMENT_SCORE', 'N/A')}",
+            f"\n{grok_payload.get('FORMATTED_TA_SUMMARY_BLOCK', 'TA Summary N/A')}\n"
+        ]
+        print("\n".join(cli_summary_parts))
+
         if img_path:
             print(f"Image saved to: {img_path}")
         else:
             print("Image generation failed or was skipped.")
         print("="*40)
+        # print(f"Grok Payload for {symbol}: {grok_payload}") # Optionally print full payload for debugging
 
 if __name__ == "__main__":
     asyncio.run(main_cli())
