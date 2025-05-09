@@ -18,10 +18,19 @@ from stock_data import StockDataFetcher
 import time # Added for timing
 import traceback # Added for better error reporting
 
+import os # Make sure os is imported
+# Determine the absolute path to the project's 'functions/nltk_data' directory
+# This assumes stock_sentiment.py is in the project root directory.
+script_root_dir = os.path.dirname(os.path.abspath(__file__))
+custom_nltk_data_path = os.path.join(script_root_dir, 'functions', 'nltk_data')
+
+# Add the custom path to NLTK's data path list if not already present, prioritizing it
+if custom_nltk_data_path not in nltk.data.path:
+    nltk.data.path.insert(0, custom_nltk_data_path)
 # Download required NLTK data
 try:
     nltk.data.find('sentiment/vader_lexicon.zip')
-except nltk.downloader.DownloadError:
+except LookupError:
     nltk.download('vader_lexicon')
 
 # Load environment variables
