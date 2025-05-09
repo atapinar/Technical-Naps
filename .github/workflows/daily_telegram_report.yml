@@ -1,0 +1,42 @@
+name: Daily Stock Sentiment Report
+
+on:
+  schedule:
+    - cron: '0 20 * * *' # Runs at 20:00 UTC (11:00 PM Istanbul time, UTC+3)
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  send_report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12' # As per user confirmation (3.12.2 specific can be set)
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          # The stock_sentiment.py script handles NLTK data download if needed.
+
+      - name: Run Telegram Reporter Script
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USER_AGENT: ${{ secrets.REDDIT_USER_AGENT }}
+          POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          QUANDL_API_KEY: ${{ secrets.QUANDL_API_KEY }}
+          # Optional: Override defaults from .env if secrets are set
+          SYMBOLS_TO_ANALYZE: ${{ secrets.SYMBOLS_TO_ANALYZE || 'TSLA,PLTR,RKLB' }}
+          SENTIMENT_HISTORY_DAYS: ${{ secrets.SENTIMENT_HISTORY_DAYS || '7' }}
+          HISTORICAL_POST_FETCH_LIMIT: ${{ secrets.HISTORICAL_POST_FETCH_LIMIT || '100' }}
+          STOCK_DATA_LOOKBACK_DAYS: ${{ secrets.STOCK_DATA_LOOKBACK_DAYS || '90' }}
+          ENABLE_GROK_SUMMARY: ${{ secrets.ENABLE_GROK_SUMMARY || 'True' }}
+        run: python telegram_reporter.py

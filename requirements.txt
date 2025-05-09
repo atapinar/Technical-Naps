@@ -13,3 +13,5 @@ seaborn==0.13.2
 polygon-api-client # Added for Polygon.io
 pandas-ta
 httpx[http2] # Added for CoinAPI calls
+python-telegram-bot
+APScheduler
