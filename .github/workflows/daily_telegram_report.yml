@@ -2,7 +2,7 @@ name: Daily Stock Sentiment Report
 
 on:
   schedule:
-    - cron: '0 20 * * *' # Runs at 20:00 UTC (11:00 PM Istanbul time, UTC+3)
+    - cron: '0 21 * * 1-5' # Runs at 21:00 UTC on weekdays (Monday-Friday)
   workflow_dispatch: # Allows manual triggering from the Actions tab
 
 jobs:
