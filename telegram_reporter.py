@@ -8,7 +8,7 @@ import math # For math.isnan
 from telegram import Bot
 from telegram.constants import ParseMode
 from telegram.error import RetryAfter, TimedOut, NetworkError
-from telegram.helpers import escape_markdown # <<<<<<< ADD THIS IMPORT
+from telegram.helpers import escape_markdown
 from dotenv import load_dotenv
 import stock_sentiment # Your script
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -535,8 +535,6 @@ async def main():
     except (KeyboardInterrupt, SystemExit):
         logging.info("Shutting down scheduler...")
         scheduler.shutdown()
-
-# ... (rest of existing code) ...
 
 if __name__ == "__main__":
     async def run_once():
