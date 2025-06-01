@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://github.com/atapinar/Technical-Naps">
     <!-- Add your project logo here -->
-    <img src="https://via.placeholder.com/200x120.png?text=Technical+Naps+Logo" alt="Logo" width="200" height="120">
+    <img src="orange-pill-bitcoin-adoption.webp" alt="Technical Naps Logo" width="200" height="120">
   </a>
 
   <h3 align="center">Technical Naps 💊 Telegram Bot</h3>
