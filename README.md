@@ -3,7 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="[PROJECT_REPO_URL]">
+  <a href="https://github.com/atapinar/Technical-Naps">
     <!-- Add your project logo here -->
     <img src="https://via.placeholder.com/200x120.png?text=Technical+Naps+Logo" alt="Logo" width="200" height="120">
   </a>
@@ -13,7 +13,7 @@
   <p align="center">
     Automate your market analysis with actionable insights delivered directly to Telegram.
     <br />
-    <a href="[PROJECT_REPO_URL]"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/atapinar/Technical-Naps"><strong>Explore the docs »</strong></a>
     <br />
     <br />
   </p>
@@ -110,10 +110,9 @@ Follow these steps to get your Technical Naps 💊 bot running:
 1.  **Clone the Repository:**
     ```bash
     # Choose a directory name, e.g., TechnicalNapsBot
-    git clone https://github.com/your-username/TechnicalNaps.git TechnicalNapsBot # Replace with your actual repo URL & desired local folder name
+    git clone https://github.com/atapinar/Technical-Naps.git TechnicalNapsBot
     cd TechnicalNapsBot
     ```
-    *(Note: You'll likely want to rename the repository itself on GitHub/GitLab if you haven't already)*
 
 2.  **Install Dependencies:**
     It's highly recommended to use a virtual environment:
@@ -153,7 +152,7 @@ Follow these steps to get your Technical Naps 💊 bot running:
     # --- API Keys ---
     REDDIT_CLIENT_ID="YOUR_REDDIT_APP_CLIENT_ID"     # From Reddit App settings (script type)
     REDDIT_CLIENT_SECRET="YOUR_REDDIT_APP_SECRET"    # From Reddit App settings
-    REDDIT_USER_AGENT="TechnicalNapsBot/1.0 by YourUsername" # Replace with descriptive user agent (Updated Name)
+    REDDIT_USER_AGENT="TechnicalNapsBot/1.0 by atapinar" # Replace with descriptive user agent
 
     POLYGON_API_KEY="YOUR_POLYGON_IO_API_KEY"        # For stock data (required for stocks)
     COIN_API_KEY="YOUR_COINAPI_IO_API_KEY"           # For crypto data (required for crypto)
@@ -217,4 +216,4 @@ Distributed under the MIT License. See `LICENSE` for more information. (You shou
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [license-url]: LICENSE
-[PROJECT_REPO_URL]: https://github.com/your-username/TechnicalNaps.git <!-- Replace with your actual repo URL -->
+[PROJECT_REPO_URL]: https://github.com/atapinar/Technical-Naps
