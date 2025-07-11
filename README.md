@@ -51,7 +51,7 @@ Technical Naps 💊 combines Reddit sentiment analysis with comprehensive techni
 
 Built for traders and investors who value timely, consolidated market intelligence.
 
-### ✨ Key Features ✨
+### Key Features
 
 *   **Multi-Asset Analysis:** Track both traditional stocks (via Polygon.io) and major cryptocurrencies (via CoinAPI).
 *   **Reddit Sentiment Analysis:** Scans relevant subreddits (configurable for stocks vs. crypto) to gauge market sentiment using NLTK's VADER analyzer. Tracks historical sentiment trends.
